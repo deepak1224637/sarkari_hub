@@ -1,0 +1,39 @@
+<!-- Simple AI Chatbot Widget (Frontend Only) -->
+<div id="chatbot-container" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;">
+  <div id="chatbot-toggle" style="background: linear-gradient(90deg, #38bdf8, #6366f1); color: #fff; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(56,189,248,0.15); font-size: 2rem;">
+    💬
+  </div>
+  <div id="chatbot-box" style="display: none; width: 320px; background: #fff; border-radius: 16px; box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15); padding: 0; margin-top: 10px;">
+    <div style="background: linear-gradient(90deg, #38bdf8, #6366f1); color: #fff; border-radius: 16px 16px 0 0; padding: 1rem; font-weight: bold;">AI Chatbot</div>
+    <div id="chatbot-messages" style="height: 220px; overflow-y: auto; padding: 1rem; font-size: 0.95rem;"></div>
+    <form id="chatbot-form" style="display: flex; border-top: 1px solid #eee;">
+      <input id="chatbot-input" type="text" class="form-control" placeholder="Type your message..." style="border: none; border-radius: 0 0 0 16px;">
+      <button type="submit" class="btn btn-primary" style="border-radius: 0 0 16px 0;">Send</button>
+    </form>
+  </div>
+</div>
+<script>
+  const toggle = document.getElementById('chatbot-toggle');
+  const box = document.getElementById('chatbot-box');
+  const form = document.getElementById('chatbot-form');
+  const input = document.getElementById('chatbot-input');
+  const messages = document.getElementById('chatbot-messages');
+
+  toggle.onclick = () => {
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  };
+
+  form.onsubmit = function(e) {
+    e.preventDefault();
+    const userMsg = input.value.trim();
+    if (!userMsg) return;
+    messages.innerHTML += `<div style='margin-bottom:8px;'><b>You:</b> ${userMsg}</div>`;
+    input.value = '';
+    // Simulate AI response
+    setTimeout(() => {
+      messages.innerHTML += `<div style='margin-bottom:8px;'><b>Bot:</b> This is a demo AI response. (Integrate with backend for real AI.)</div>`;
+      messages.scrollTop = messages.scrollHeight;
+    }, 700);
+    messages.scrollTop = messages.scrollHeight;
+  };
+</script>

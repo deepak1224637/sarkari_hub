@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{{ section_title }} - SarkariHub</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">SarkariHub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/latest-jobs/">Latest Job 2025</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admit-cards/">Admit Card</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/results/">Result</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container my-5">
+      <h2 class="mb-4 text-center">{{ section_title }}</h2>
+      {% if posts %}
+        <div class="row justify-content-center">
+          {% for post in posts %}
+            <div class="col-md-8 mb-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <span class="badge {{ badge_class }}">{{ badge_label }}</span>
+                  <a href="{{ post.link }}" class="btn btn-link float-end" target="_blank">View</a>
+                  <p class="card-text"><small class="text-muted">Posted on {{ post.created_at|date:"M d, Y H:i" }}</small></p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-center">No posts available.</p>
+      {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

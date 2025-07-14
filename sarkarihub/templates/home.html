@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body class="p-3 m-0 border-0 bd-example m-0 border-0">
+    <!-- Example Code Start-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">SarkariHub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/latest-jobs/">Latest Job 2025</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admit-cards/">Admit Card</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/results/">Result</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/subscribe/">Subscribe</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">About Us</a>
+            </li>
+            {% comment %} <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li> {% endcomment %}
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ search_query|default:'' }}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <!-- Example Code End -->
+    <!-- Animated Hero Section Start -->
+    <style>
+      .navbar, .navbar-nav .nav-link, .navbar-brand {
+        font-weight: bold !important;
+      }
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 60vh;
+        background: linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%);
+        animation: fadeIn 2s ease-in;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .hero-title {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+        animation: slideIn 1.5s cubic-bezier(.68,-0.55,.27,1.55);
+      }
+      @keyframes slideIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .hero-subtitle {
+        font-size: 1.5rem;
+        color: #4a5568;
+        margin-bottom: 2rem;
+        animation: fadeIn 2.5s 0.5s backwards;
+      }
+      .hero-btn {
+        padding: 0.75rem 2rem;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        background: linear-gradient(90deg, #38bdf8, #6366f1);
+        color: #fff;
+        border: none;
+        transition: background 0.3s, transform 0.2s;
+        box-shadow: 0 4px 20px rgba(56,189,248,0.15);
+      }
+      .hero-btn:hover {
+        background: linear-gradient(90deg, #6366f1, #38bdf8);
+        transform: translateY(-3px) scale(1.05);
+      }
+    </style>
+    <section class="hero">
+      <div class="hero-title">Welcome to SarkariHub</div>
+      <div class="hero-subtitle">Your one-stop portal for all government job updates and notifications.</div>
+    </section>
+    <!-- Animated Hero Section End -->
+    <!-- Posts Section Start -->
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <h3 class="mb-3 text-center text-lg-start">Latest Job Updates</h3>
+          {% if vacancy_posts %}
+            {% for post in vacancy_posts %}
+              <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <span class="badge bg-primary">Vacancy</span>
+                  <a href="{{ post.link }}" class="btn btn-link float-end" target="_blank">View</a>
+                  <p class="card-text"><small class="text-muted">Posted on {{ post.created_at|date:"M d, Y H:i" }}</small></p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-center text-lg-start">No job vacancies available.</p>
+          {% endif %}
+        </div>
+        <div class="col-lg-4 mb-4">
+          <h3 class="mb-3 text-center text-lg-start">Admit Card</h3>
+          {% if admit_card_posts %}
+            {% for post in admit_card_posts %}
+              <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <span class="badge bg-warning text-dark">Admit Card</span>
+                  <a href="{{ post.link }}" class="btn btn-link float-end" target="_blank">View</a>
+                  <p class="card-text"><small class="text-muted">Posted on {{ post.created_at|date:"M d, Y H:i" }}</small></p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-center text-lg-start">No admit cards available.</p>
+          {% endif %}
+        </div>
+        <div class="col-lg-4 mb-4">
+          <h3 class="mb-3 text-center text-lg-start">Results</h3>
+          {% if result_posts %}
+            {% for post in result_posts %}
+              <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <span class="badge bg-success">Result</span>
+                  <a href="{{ post.link }}" class="btn btn-link float-end" target="_blank">View</a>
+                  <p class="card-text"><small class="text-muted">Posted on {{ post.created_at|date:"M d, Y H:i" }}</small></p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-center text-lg-start">No results available.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- Posts Section End -->
+    {% include 'chatbot_widget.html' %}
+    <!-- Telegram Floating Button Start -->
+    <a href="https://t.me/your_telegram_channel" target="_blank" style="position: fixed; bottom: 100px; right: 30px; z-index: 9999; background: #229ED9; color: #fff; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(34,158,217,0.15); font-size: 2rem; text-decoration: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M9.036 15.855l-.398 4.02c.57 0 .816-.246 1.113-.54l2.664-2.52 5.52 4.02c1.012.558 1.734.264 1.992-.936l3.612-16.92c.33-1.488-.54-2.07-1.524-1.728l-21.6 8.28c-1.476.57-1.464 1.38-.252 1.752l5.52 1.728 12.816-8.064c.6-.396 1.152-.18.702.216z"/></svg>
+    </a>
+    <!-- Telegram Floating Button End -->
+    <!-- Twitter Floating Button Start -->
+    <a href="https://twitter.com/your_twitter_handle" target="_blank" style="position: fixed; bottom: 170px; right: 30px; z-index: 9999; background: #1DA1F2; color: #fff; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(29,161,242,0.15); font-size: 2rem; text-decoration: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.93 9.93 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.92 4.92 0 0 0-8.384 4.482C7.691 8.095 4.066 6.13 1.64 3.161c-.542.929-.856 2.01-.857 3.17 0 2.188 1.115 4.117 2.823 5.254a4.904 4.904 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.936 4.936 0 0 1-2.224.084c.627 1.956 2.444 3.377 4.6 3.417A9.867 9.867 0 0 1 0 21.543a13.94 13.94 0 0 0 7.548 2.209c9.058 0 14.009-7.513 14.009-14.009 0-.213-.005-.425-.014-.636A10.012 10.012 0 0 0 24 4.557z"/></svg>
+    </a>
+    <!-- Twitter Floating Button End -->
+    <!-- Instagram Floating Button Start -->
+    <a href="https://instagram.com/your_instagram_handle" target="_blank" style="position: fixed; bottom: 240px; right: 30px; z-index: 9999; background: #E1306C; color: #fff; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(225,48,108,0.15); font-size: 2rem; text-decoration: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608C4.515 2.497 5.782 2.225 7.148 2.163 8.414 2.105 8.794 2.163 12 2.163zm0-2.163C8.741 0 8.332.012 7.052.07 5.771.128 4.659.388 3.678 1.37c-.98.98-1.24 2.092-1.298 3.373C2.012 5.668 2 6.077 2 12c0 5.923.012 6.332.07 7.613.058 1.281.318 2.393 1.298 3.373.98.98 2.092 1.24 3.373 1.298C8.332 23.988 8.741 24 12 24s3.668-.012 4.948-.07c1.281-.058 2.393-.318 3.373-1.298.98-.98 1.24-2.092 1.298-3.373.058-1.281.07-1.69.07-7.613 0-5.923-.012-6.332-.07-7.613-.058-1.281-.318-2.393-1.298-3.373-.98-.98-2.092-1.24-3.373-1.298C15.668.012 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
+    </a>
+    <!-- Instagram Floating Button End -->
+    <!-- Facebook Floating Button Start -->
+    <a href="https://facebook.com/your_facebook_page" target="_blank" style="position: fixed; bottom: 310px; right: 30px; z-index: 9999; background: #1877F3; color: #fff; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(24,119,243,0.15); font-size: 2rem; text-decoration: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.325-.592 1.325-1.326V1.326C24 .592 23.405 0 22.675 0"/></svg>
+    </a>
+    <!-- Facebook Floating Button End -->
+  </body>
+</html>
