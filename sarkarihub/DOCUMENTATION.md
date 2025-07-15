@@ -10,6 +10,9 @@ SarkariHub is a Django-based portal for government job updates, admit cards, and
 - Social media floating buttons (Telegram, Twitter, Instagram, Facebook)
 - Search bar for posts
 - About Us and Subscribe pages
+- Add Answer Key 
+- Dark mode togal
+
 
 ## How to Run
 1. Install dependencies:

@@ -35,6 +35,9 @@
               <a class="nav-link" href="/subscribe/">Subscribe</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/subscribe/">Answer Key</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/about/">About Us</a>
             </li>
             {% comment %} <li class="nav-item dropdown">
@@ -49,15 +52,71 @@
               </ul>
             </li> {% endcomment %}
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ search_query|default:'' }}">
+          <form class="d-flex align-items-center me-3" role="search" style="max-width: 320px; width: 100%;">
+            <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ search_query|default:'' }}" style="min-width: 0;">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
+          <button id="darkModeToggle" class="btn btn-outline-secondary ms-2" type="button" title="Toggle dark mode">
+            <span id="darkModeIcon" class="bi bi-moon"></span> <span class="d-none d-lg-inline">Dark Mode</span>
+          </button>
         </div>
       </div>
     </nav>
     <!-- Example Code End -->
+    <!-- Floating Notification Start -->
+    <div id="floatingNotification" class="toast align-items-center text-bg-primary border-0 position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 1080; min-width: 300px; display: none;">
+      <div class="d-flex">
+        <div class="toast-body">
+          🚀 Welcome to SarkariHub! Get the latest government job updates here.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+    <!-- Floating Notification End -->
+    <!-- Scrolling Marquee Start -->
+    <div style="width:100%;overflow:hidden;background:linear-gradient(90deg,#38bdf8,#6366f1);color:#fff;font-weight:bold;">
+      <marquee behavior="scroll" direction="left" scrollamount="6" style="padding:8px 0; font-size:1.1rem;">
+        🚨 Latest: Welcome to SarkariHub! Check out the newest government job updates, admit cards, results, and answer keys. Stay tuned for instant alerts!
+      </marquee>
+    </div>
+    <!-- Scrolling Marquee End -->
     <!-- Animated Hero Section Start -->
+    <style>
+      body.dark-mode {
+        background-color: #181a1b !important;
+        color: #e0e0e0 !important;
+      }
+      .dark-mode .navbar, .dark-mode .navbar-nav .nav-link, .dark-mode .navbar-brand {
+        background: #23272b !important;
+        color: #e0e0e0 !important;
+      }
+      .dark-mode .card {
+        background: #23272b;
+        color: #e0e0e0;
+        border-color: #343a40;
+      }
+      .dark-mode .form-control, .dark-mode .btn {
+        background: #23272b;
+        color: #e0e0e0;
+        border-color: #343a40;
+      }
+      .dark-mode .btn-outline-success {
+        color: #e0e0e0;
+        border-color: #38bdf8;
+      }
+      .dark-mode .btn-outline-success:hover {
+        background: #38bdf8;
+        color: #181a1b;
+      }
+      .dark-mode .btn-outline-secondary {
+        color: #e0e0e0;
+        border-color: #6366f1;
+      }
+      .dark-mode .btn-outline-secondary:hover {
+        background: #6366f1;
+        color: #fff;
+      }
+    </style>
     <style>
       .navbar, .navbar-nav .nav-link, .navbar-brand {
         font-weight: bold !important;
@@ -122,9 +181,9 @@
             {% for post in vacancy_posts %}
               <div class="card shadow-sm mb-3">
                 <div class="card-body">
-                  <h5 class="card-title">{{ post.title }}</h5>
+                  <h5 class="card-title"><a href="{% url 'job_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a></h5>
                   <span class="badge bg-primary">Vacancy</span>
-                  <a href="{{ post.link }}" class="btn btn-link float-end" target="_blank">View</a>
+                  <a href="{% url 'job_detail' post.id %}" class="btn btn-link float-end">Details</a>
                   <p class="card-text"><small class="text-muted">Posted on {{ post.created_at|date:"M d, Y H:i" }}</small></p>
                 </div>
               </div>
@@ -139,11 +198,13 @@
             {% for post in admit_card_posts %}
               <div class="card shadow-sm mb-3">
                 <div class="card-body">
-                  <h5 class="card-title">{{ post.title }}</h5>
+                  <h5 class="card-title"><a href="{% url 'job_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a></h5>
                   <span class="badge bg-warning text-dark">Admit Card</span>
-                  <a href="{{ post.link }}" class="btn btn-link float-end" target="_blank">View</a>
+                  <a href="{% url 'job_detail' post.id %}" class="btn btn-link float-end">Details</a>
                   <p class="card-text"><small class="text-muted">Posted on {{ post.created_at|date:"M d, Y H:i" }}</small></p>
                 </div>
+
+                
               </div>
             {% endfor %}
           {% else %}
@@ -156,9 +217,9 @@
             {% for post in result_posts %}
               <div class="card shadow-sm mb-3">
                 <div class="card-body">
-                  <h5 class="card-title">{{ post.title }}</h5>
+                  <h5 class="card-title"><a href="{% url 'job_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a></h5>
                   <span class="badge bg-success">Result</span>
-                  <a href="{{ post.link }}" class="btn btn-link float-end" target="_blank">View</a>
+                  <a href="{% url 'job_detail' post.id %}" class="btn btn-link float-end">Details</a>
                   <p class="card-text"><small class="text-muted">Posted on {{ post.created_at|date:"M d, Y H:i" }}</small></p>
                 </div>
               </div>
@@ -170,7 +231,19 @@
       </div>
     </div>
     <!-- Posts Section End -->
-    {% include 'chatbot_widget.html' %}
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6875fed5d848a619117d6b5b/1j06emt0r';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
     <!-- Telegram Floating Button Start -->
     <a href="https://t.me/your_telegram_channel" target="_blank" style="position: fixed; bottom: 100px; right: 30px; z-index: 9999; background: #229ED9; color: #fff; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(34,158,217,0.15); font-size: 2rem; text-decoration: none;">
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M9.036 15.855l-.398 4.02c.57 0 .816-.246 1.113-.54l2.664-2.52 5.52 4.02c1.012.558 1.734.264 1.992-.936l3.612-16.92c.33-1.488-.54-2.07-1.524-1.728l-21.6 8.28c-1.476.57-1.464 1.38-.252 1.752l5.52 1.728 12.816-8.064c.6-.396 1.152-.18.702.216z"/></svg>
@@ -192,4 +265,48 @@
     </a>
     <!-- Facebook Floating Button End -->
   </body>
+</html>
+<script>
+  // Show floating notification (toast) on page load
+  window.addEventListener('DOMContentLoaded', function() {
+    var toastEl = document.getElementById('floatingNotification');
+    if (toastEl) {
+      toastEl.style.display = 'block';
+      setTimeout(function() {
+        toastEl.style.display = 'none';
+      }, 6000); // Hide after 6 seconds
+      toastEl.querySelector('.btn-close').onclick = function() {
+        toastEl.style.display = 'none';
+      };
+    }
+  });
+</script>
+</html>
+<script>
+  // Dark mode toggle logic
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const darkModeIcon = document.getElementById('darkModeIcon');
+  function setDarkMode(enabled) {
+    if (enabled) {
+      document.body.classList.add('dark-mode');
+      if (darkModeIcon) darkModeIcon.className = 'bi bi-brightness-high';
+      localStorage.setItem('darkMode', 'on');
+    } else {
+      document.body.classList.remove('dark-mode');
+      if (darkModeIcon) darkModeIcon.className = 'bi bi-moon';
+      localStorage.setItem('darkMode', 'off');
+    }
+  }
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', function() {
+      setDarkMode(!document.body.classList.contains('dark-mode'));
+    });
+    // On load, check localStorage
+    if (localStorage.getItem('darkMode') === 'on') {
+      setDarkMode(true);
+    }
+  }
+</script>
+<!-- Bootstrap Icons CDN for moon/sun icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </html>

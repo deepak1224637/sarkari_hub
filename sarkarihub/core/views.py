@@ -1,3 +1,8 @@
+from django.shortcuts import get_object_or_404
+
+def job_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    return render(request, 'job_detail.html', {'post': post})
 # About page view
 def about(request):
     return render(request, 'about.html')

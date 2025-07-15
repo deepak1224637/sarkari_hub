@@ -9,4 +9,5 @@ urlpatterns = [
     path('results/', views.results, name='results'),
     path('subscribe/', views.subscribe, name='subscribe'),
     path('about/', views.about, name='about'),
+    path('job/<int:post_id>/', views.job_detail, name='job_detail'),
 ]
