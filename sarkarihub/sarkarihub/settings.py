@@ -4,7 +4,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'p857055@gmail.com'  # Replace with your Gmail address
-EMAIL_HOST_PASSWORD = 'gcer smak miqy wqcp'         # Replace with your Gmail app password
+import os
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')  # Set this in your environment variables
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 """
 Django settings for sarkarihub project.
