@@ -80,8 +80,8 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'sarkarihub.wsgi.application'
-WSGI_APPLICATION = 'sarkarihub.sarkarihub.wsgi.application'
+WSGI_APPLICATION = 'sarkarihub.wsgi.application'
+#WSGI_APPLICATION = 'sarkarihub.sarkarihub.wsgi.application'
 
 
 
